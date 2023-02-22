@@ -22,6 +22,10 @@
 #include <immintrin.h>
 #endif
 
+#if FOLLY_NEON
+#include <folly/sse2neon.h>
+#endif
+
 #include <stdint.h>
 
 #include <cstddef>
@@ -75,7 +79,7 @@ uint32_t crc32c_sw(
 uint32_t crc32_hw(
     const uint8_t* data, size_t nbytes, uint32_t startingChecksum = ~0U);
 
-#if FOLLY_SSE_PREREQ(4, 2)
+#if FOLLY_SSE_PREREQ(4, 2) || FOLLY_NEON
 uint32_t crc32_hw_aligned(
     uint32_t remainder, const __m128i* p, size_t vec_count);
 #endif
