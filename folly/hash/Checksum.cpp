@@ -27,6 +27,8 @@
 #if FOLLY_SSE_PREREQ(4, 2)
 #include <emmintrin.h>
 #include <nmmintrin.h>
+#elif FOLLY_NEON
+#include <folly/sse2neon.h>
 #endif
 
 namespace folly {
@@ -35,7 +37,7 @@ namespace detail {
 
 uint32_t crc32c_sw(
     const uint8_t* data, size_t nbytes, uint32_t startingChecksum);
-#if FOLLY_SSE_PREREQ(4, 2)
+#if FOLLY_SSE_PREREQ(4, 2) || FOLLY_NEON
 
 uint32_t crc32_sw(
     const uint8_t* data, size_t nbytes, uint32_t startingChecksum);
@@ -66,12 +68,12 @@ uint32_t crc32_hw(
 
 bool crc32c_hw_supported() {
   static folly::CpuId id;
-  return id.sse42();
+  return true;
 }
 
 bool crc32_hw_supported() {
   static folly::CpuId id;
-  return id.sse42();
+  return true;
 }
 
 #else

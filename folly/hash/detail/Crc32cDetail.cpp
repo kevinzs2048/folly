@@ -41,7 +41,7 @@
 namespace folly {
 namespace detail {
 
-#if defined(FOLLY_X64) && FOLLY_SSE_PREREQ(4, 2)
+#if (defined(FOLLY_X64) && FOLLY_SSE_PREREQ(4, 2)) || FOLLY_NEON
 
 namespace crc32_detail {
 
@@ -237,7 +237,6 @@ void triplet_loop(
 } // namespace crc32_detail
 
 /* Compute CRC-32C using the Intel hardware instruction. */
-FOLLY_TARGET_ATTRIBUTE("sse4.2")
 uint32_t crc32c_hw(const uint8_t* buf, size_t len, uint32_t crc) {
   const unsigned char* next = (const unsigned char*)buf;
   size_t count;

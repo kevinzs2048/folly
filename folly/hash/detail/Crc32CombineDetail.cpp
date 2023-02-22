@@ -67,7 +67,7 @@ struct gf_powers_make {
 
 } // namespace
 
-#if FOLLY_SSE_PREREQ(4, 2)
+#if FOLLY_SSE_PREREQ(4, 2) || FOLLY_NEON
 
 // Reduction taken from
 // https://www.nicst.de/crc.pdf
